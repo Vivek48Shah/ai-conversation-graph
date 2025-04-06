@@ -40,9 +40,9 @@ The chatbot is defined as a **stateful graph**, where each node represents a sta
 
 ---
 
-## 🧠 State Management
+##  State Management
 
-### ✨ Custom `State` Class
+###  Custom `State` Class
 
 ```python
 from langgraph.graph import MessagesState
