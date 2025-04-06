@@ -98,3 +98,15 @@ These functions:
   
 ---
 
+##  Features
+
+-  Persistent memory using SQLite – resumes conversations across sessions
+-  Context-aware routing using LangGraph nodes
+-  Automatic summarization of conversation history
+-  Supports looping, branching, and conditional transitions
+-  Modular architecture – easy to extend with new nodes or memory backends
+  
+---
+## 📚 References
+
+- [LangGraph Docs]([https://docs.langgraph.dev/](https://langchain-ai.github.io/langgraph/concepts/low_level/))
