@@ -35,7 +35,66 @@ So even if you stop and restart the chatbot later, it remembers where things lef
 The chatbot is defined as a **stateful graph**, where each node represents a stage in the conversation, and edges define transitions based on logic or user input.
 
 
+![Chatbot Diagram](graph_conversational.png)
 
 
+---
 
+## 🧠 State Management
+
+### ✨ Custom `State` Class
+
+```python
+from langgraph.graph import MessagesState
+
+class State(MessagesState):
+    ...
+```
+
+This `State` class, based on LangGraph’s `MessagesState`, manages:
+
+- Chat history  
+- Summaries  
+- Node context  
+- User input/output  
+
+Each node reads from and writes to this object, which travels through the graph
+
+---
+## Persistent Memory with SQLite
+
+State is saved using an in-memory SQLite database:
+```
+conn = sqlite3.connect(":memory:", check_same_thread = False)
+```
+
+Swap it with a file for true disk persistence:
+
+```
+db_path = "state_db/example.db"
+conn = sqlite3.connect(db_path, check_same_thread=False)
+memory = SqliteSaver(conn)
+```
+###  Why this matters:
+- Conversations can resume after interruptions  
+- Persistent summaries and memory  
+- Useful for production and prototyping
+
+---
+### Reducer-Style Node Functions
+```
+def call_model(state: State) -> State:
+    # Generate GPT response
+    return updated_state
+
+def summarize_converstaion(state: State) -> State:
+    # Summarize chat history
+    return updated_state
+```
+These functions:
+- Take the current State
+- Modify or enrich it
+- Return a new State
+  
+---
 
